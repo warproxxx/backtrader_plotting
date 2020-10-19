@@ -367,8 +367,9 @@ class FigureEnvelope(object):
 
     def plot_data(self, data: bt.AbstractDataBase):
         source_id = FigureEnvelope._source_id(data)
-        title = sanitize_source_name(label_resolver.datatarget2label([data]))
-
+        # title = sanitize_source_name(label_resolver.datatarget2label([data]))
+        title = ""
+        legend_label = "OHLC"
         # append to title
         self._figure_append_title(title)
 
@@ -382,12 +383,12 @@ class FigureEnvelope(object):
                 self._nextcolor(data.plotinfo.plotmaster)
                 color = convert_color(self._color(data.plotinfo.plotmaster))
 
-            renderer = self.figure.line('index', source_id + 'close', source=self._cds, line_color=color, legend_label=title)
+            renderer = self.figure.line('index', source_id + 'close', source=self._cds, line_color=color, legend_label=legend_label)
             self._set_single_hover_renderer(renderer)
 
             self._hoverc.add_hovertip("Close", f"@{source_id}close", data)
         elif self._scheme.style == 'bar':
-            self.figure.segment('index', source_id + 'high', 'index', source_id + 'low', source=self._cds, color=source_id + 'colors_wicks', legend_label=title)
+            self.figure.segment('index', source_id + 'high', 'index', source_id + 'low', source=self._cds, color=source_id + 'colors_wicks', legend_label=legend_label)
             renderer = self.figure.vbar('index',
                                         get_bar_width(),
                                         source_id + 'open',
@@ -395,7 +396,7 @@ class FigureEnvelope(object):
                                         source=self._cds,
                                         fill_color=source_id + 'colors_bars',
                                         line_color=source_id + 'colors_outline',
-                                        legend_label=title,
+                                        legend_label=legend_label,
                                         )
 
             self._set_single_hover_renderer(renderer)
@@ -459,7 +460,8 @@ class FigureEnvelope(object):
         self._plot_indicator_observer(obj, master)
 
     def _plot_indicator_observer(self, obj: Union[bt.Indicator, bt.Observer], master):
-        pl = plotobj2label(obj)
+        # pl = plotobj2label(obj)
+        pl = ""
 
         self._figure_append_title(pl)
         indlabel = obj.plotlabel()
@@ -545,7 +547,7 @@ class FigureEnvelope(object):
             hover_label_suffix = f" - {linealias}" if obj.size() > 1 else ""  # we need no suffix if there is just one line in the indicator anyway
             hover_label = indlabel + hover_label_suffix
             hover_data = f"@{source_id}{{{self._scheme.number_format}}}"
-            self._hoverc.add_hovertip(hover_label, hover_data, obj)
+            # self._hoverc.add_hovertip(hover_label, hover_data, obj)
 
         self._set_yticks(obj)
         self._plot_hlines(obj)

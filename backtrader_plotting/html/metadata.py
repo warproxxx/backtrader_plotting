@@ -55,20 +55,20 @@ def _get_datas(strategy: bt.Strategy) -> str:
 
 
 def _get_strategy(strategy: bt.Strategy) -> str:
-    md = f'\n# Strategy: {strategy.__class__.__name__}\n'
+    # md = f'\n# Strategy: {strategy.__class__.__name__}\n'
 
-    md += _get_parameter_table(strategy.params)
+    # md += _get_parameter_table(strategy.params)
 
-    md += '## Indicators:\n\n'
-    for i in strategy.getindicators():
-        md += f'### {i.__class__.__name__} @ {indicator2fullid(i)}\n\n'
-        # md += f'Data: \n'
-        md += _get_parameter_table(i.params)
+    # md += '## Indicators:\n\n'
+    # for i in strategy.getindicators():
+    #     md += f'### {i.__class__.__name__} @ {indicator2fullid(i)}\n\n'
+    #     # md += f'Data: \n'
+    #     md += _get_parameter_table(i.params)
 
-    md += 'Source Code:\n'
-    md += f'\n```\n{inspect.getsource(strategy.__class__)}\n```\n\n'
+    # md += 'Source Code:\n'
+    # md += f'\n```\n{inspect.getsource(strategy.__class__)}\n```\n\n'
 
-    return md
+    return ""
 
 
 def _get_analyzers(strategy: bt.Strategy) -> str:
@@ -98,9 +98,9 @@ def get_metadata_div(strategy: bt.Strategy) -> str:
     md = ""
 
     md += _get_strategy(strategy)
-    md += '* * *'
-    md += _get_datas(strategy)
-    md += '* * *'
+    # md += '* * *'
+    # md += _get_datas(strategy)
+    # md += '* * *'
     md += _get_observers(strategy)
     md += '* * *'
     md += _get_analyzers(strategy)
